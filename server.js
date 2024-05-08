@@ -36,27 +36,32 @@ app.get("/api/courses", function (req, res) {
 
 // GET one course by id
 app.get("/api/courses/:id", function (req, res) {
-    let id = req.params.id;
-    console.log("LOG: Got a GET request for course " + id);
+        let id = req.params.id;
+        console.log("LOG: Got a GET request for course " + id);
 
-    let data = fs.readFileSync(__dirname + "/data/" + "courses.json", "utf8");
-    data = JSON.parse(data);
+        let data = fs.readFileSync(__dirname + "/data/" + "courses.json", "utf8");
+        data = JSON.parse(data);
 
-    // Find the course
-    let match = data.find(c => c.id == id);
+        // Find the course
+        let match = data.find(c => c.id == id);
 
-    // If course not found
-    if (match == undefined) {
-        console.log("LOG: **NOT FOUND**: course " + id + " does not exist!");
-        res.status(404).send();   // not found
-        return;
-    }
+        // If course not found
+        if (match == undefined) {
+            console.log("LOG: **NOT FOUND**: course " + id + " does not exist!");
+            res.status(404).send();   // not found
+            return;
+        }
 
-    // LOG returned data
-    console.log("LOG: Returned course -> ");
-    console.log(match);
+        // LOG returned data
+        console.log("LOG: Returned course -> ");
+        console.log(match);
 
-    res.end(JSON.stringify(match));
+        res.end(JSON.stringify(match));
+});
+
+// GET details
+app.get("/details/", (req, res) => {
+    res.sendFile(path.join(__dirname, '/details.html'));
 });
 
 // POST a course to be added
@@ -203,5 +208,5 @@ app.delete("/api/courses/:id", function (req, res) {
 
 let server = app.listen(8081, function () {
     let port = server.address().port;
-    console.log("LOG: App listening at port %s", port);
+    console.log("LOG: App listening at http://localhost:%s", port);
 });

@@ -20,7 +20,7 @@
                         tbody.insertRow().innerHTML = `
                             <td>${element.dept}</td>
                             <td>${element.courseNum}</td>
-                            <td>${element.courseName}</td>
+                            <td><a href="http://localhost:8081/details?${element.id}">${element.courseName}</a></td>
                         `;
                     });
                 })
