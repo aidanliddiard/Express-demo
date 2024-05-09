@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Course</title>
+</head>
+<body>
+    <form>
+        <h1>Create a New Course</h1>
+        <label for="courseName">Course Name:</label><br>
+        <input type="text" id="courseName" name="courseName" required><br>
+        <label for="courseName">Course Number:</label><br>
+        <input type="text" id="courseNum" name="CourseNum" required><br>
+        <label for="dept">Department:</label><br>
+        <select id="dept" required>
+            <option value="" disabled selected>Department</option>
+            <option value="CompSci">CompSci</option>
+            <option value="Math">Math</option>
+            <option value="Physics">Physics</option>
+            <option value="Biology">Biology</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="English">English</option>
+            <option value="Finance">Finance</option>
+        </select></br>
+        <label for="courseName">Instructor:</label><br>
+        <input type="text" id="instructor" name="instructor" required><br>
+        <label for="startDate">Start Date:</label><br>
+        <input type="date" id="startDate" name="startDate" required><br>
+        <label for="numDays">Number of Days:</label><br>
+        <input type="number" id="numDays" name="numDays" min="1" required><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            let courseName = document.getElementById('courseName').value;
+            let courseNum = document.getElementById('courseNum').value;
+            let dept = document.getElementById('dept').value;
+            let instructor = document.getElementById('instructor').value;
+            let startDate = document.getElementById('startDate').value;
+            let numDays = document.getElementById('numDays').value;
+
+            let newCourse = {
+                courseName: courseName,
+                courseNum: courseNum,
+                dept: dept,
+                instructor: instructor,
+                startDate: startDate,
+                numDays: numDays
+            };
+
+            fetch('http://localhost:8081/api/courses', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newCourse)
+            }).then(response => {
+                console.log(response);
+                if (response.ok) {
+                    alert('Course added successfully');
+                    window.location.href = '/';
+                } else {
+                    alert('Error adding course');
+                }
+            }).catch(error => {
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -64,6 +64,11 @@ app.get("/details/", (req, res) => {
     res.sendFile(path.join(__dirname, '/details.html'));
 });
 
+// GET course details
+app.get("/newcourse/", (req, res) => {
+    res.sendFile(path.join(__dirname, '/newcourse.html'));
+});
+
 // POST a course to be added
 app.post("/api/courses", urlencodedParser, function (req, res) {
     console.log("LOG: Got a POST request to add a course");
